@@ -34,8 +34,8 @@ class UserController extends Controller
             'status_code' => 200,
             'message_id' => 'SUCCESS RETRIEVED',
             'message' => 'User data successfully retrieved',
-            'posts' => $posts,
             'userProfile' => $userProfile,
+            'posts' => $posts,
             'followsCount' => $followsCount
         ]);
     }

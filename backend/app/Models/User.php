@@ -150,6 +150,7 @@ class User extends Authenticatable
 
         return $posts;
     }
+    
     /** 
      * Function that process the formatting of the date and time of the certain post
      * 

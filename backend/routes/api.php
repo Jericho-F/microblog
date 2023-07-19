@@ -19,7 +19,7 @@ use App\Http\Controllers\Auth\RegisterController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/users', function (Request $request) {
     return $request->user();
 });
 
@@ -38,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
     Route::controller(UserController::class)->group(function() {
-        // Route::get('/user', 'index');
+        Route::get('/user', 'index');
         Route::get('/follow/{id}', 'follow');
         Route::post('/logout', 'logout');
         Route::get('/search', 'search');

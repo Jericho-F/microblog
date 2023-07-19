@@ -22,17 +22,16 @@ const DefaultLayout = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const response = await axiosClient.get('/user');
-            setUser(response.data);
-          } catch (error) {
-            console.error(error);
-          }
+            try {
+                const response = await axiosClient.get('/user');
+                setUser(response.data);
+            } catch (error) {
+                console.error(error);
+            }
         };
       
         fetchData();
-      }, []);
-
+    }, []);
     return (
         <div id="defaultLayout">
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -45,7 +44,7 @@ const DefaultLayout = () => {
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {user.first_name}
+                                {user?.userProfile?.first_name}
                             </a>
                             <ul className="dropdown-menu dropdown-menu-end">
                                 <li><a className="dropdown-item" href="#">Profile</a></li>

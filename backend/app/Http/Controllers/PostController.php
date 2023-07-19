@@ -28,17 +28,7 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $data = $request->validated();
-
-        if ($data['content'] === null && $data['image'] === null) {
-            return response()->json([
-                'status_code' => 204,
-                'message_id' => 'NO_CONTENT',
-                'message' => 'FIll out at least 1 field.',
-                'content' => $data['content'],
-                'image' => $data['image'] ?? null
-            ]);
-        }
-
+        
         $success = Post::store($data);
         
         return response()->json([

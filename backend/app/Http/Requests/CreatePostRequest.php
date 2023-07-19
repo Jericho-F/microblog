@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreatePostRequest extends FormRequest
 {
@@ -24,17 +25,29 @@ class CreatePostRequest extends FormRequest
     public function rules()
     {
         $maxLength = config('constants.CHARACTER_MAX_LENGTH');
+
         return [
             'content' => [
+                // Rule::requiredIf(function () {
+                //     return is_null($this->input('image'));
+                // }),
                 'nullable',
                 function ($attribute, $value, $fail) use ($maxLength) {
                     $processedValue = preg_replace("/\R/u", "\n", $value);
-                    if (strlen($processedValue) > config('constants.CHARACTER_MAX_LENGTH')) {
+                    if (strlen($processedValue) > $maxLength) {
                         $fail("The $attribute field should not exceed $maxLength characters.");
                     }
                 },
             ],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,gif,png', 'max:2048'],
+            'image' => [
+                Rule::requiredIf(function () {
+                    return is_null($this->input('content'));
+                }),
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,gif,png',
+                'max:2048',
+            ],
         ];
     }
 
@@ -46,6 +59,7 @@ class CreatePostRequest extends FormRequest
     public function messages()
     {
         return [
+            'image.required' => 'Fill at least one field',
             'content.max' => 'The content field should not exceed 140 characters.',
             'image.max' => 'The image must not be greater than 2048 kilobytes.',
             'image.image' => 'The image must be a jpg, jpeg, gif, or png format.',
